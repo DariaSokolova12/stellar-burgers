@@ -9,11 +9,11 @@ import { getOrderByNumber } from '../../services/slices/FeedSlice';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
-   const { number } = useParams();
-   const dispatch = useDispatch();
-   const orderData = useSelector(findOrderByNumber(Number(number)));
-   const ingredients = useSelector((state) => state.ingredients.data);
-   useEffect(() => {
+  const { number } = useParams();
+  const dispatch = useDispatch();
+  const orderData = useSelector(findOrderByNumber(Number(number)));
+  const ingredients = useSelector((state) => state.ingredients.data);
+  useEffect(() => {
     if (!orderData) {
       dispatch(getOrderByNumber(Number(number)));
     }

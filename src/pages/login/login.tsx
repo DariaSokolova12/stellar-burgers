@@ -1,4 +1,4 @@
-import { FC, SyntheticEvent, useState } from 'react';
+import { FC, useState } from 'react';
 import { useDispatch, useSelector } from '../../services/store';
 import { LoginUI } from '../../components/ui/pages/login';
 import { Navigate } from 'react-router-dom';

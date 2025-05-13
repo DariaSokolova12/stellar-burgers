@@ -18,7 +18,6 @@ import { useEffect } from 'react';
 import { useDispatch } from '../../services/store';
 import { fetchIngredients } from '../../services/slices/IngridientSlice';
 import { checkUserAuth } from '../../services/slices/UserSlice';
-
 import { AppHeader } from '@components';
 
 const App = () => {

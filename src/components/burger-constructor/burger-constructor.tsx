@@ -12,7 +12,6 @@ import {
   getOrderModalData
 } from '../../services/slices/BurgerConstructorSlice';
 
-
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -12,7 +12,6 @@ import {
 import { setCookie, getCookie, deleteCookie } from '../../utils/cookie';
 import { TUser, TOrder } from '@utils-types';
 
-
 interface UserState {
   user: TUser | null;
   orders: TOrder[];

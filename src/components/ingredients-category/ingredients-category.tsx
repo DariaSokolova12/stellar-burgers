@@ -8,9 +8,9 @@ import { getConstructorItems } from '../../services/slices/BurgerConstructorSlic
 export const IngredientsCategory = forwardRef<
   HTMLUListElement,
   TIngredientsCategoryProps
->(({ title, titleRef, ingredients}, ref) => {
+>(({ title, titleRef, ingredients }, ref) => {
   /** TODO: взять переменную из стора */
- const burgerConstructor = useSelector(getConstructorItems);
+  const burgerConstructor = useSelector(getConstructorItems);
 
   const ingredientsCounters = useMemo(() => {
     const { bun, ingredients } = burgerConstructor;
