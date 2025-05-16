@@ -1,4 +1,4 @@
-import { ingredients, modal, globalInfo } from './support/selectors';
+import { ingredients, modal, globalInfo } from '../support/selectors';
 
 describe('Интеграционные тесты для страницы конструктора бургера', () => {
   beforeEach(() => {
