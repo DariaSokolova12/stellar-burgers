@@ -30,6 +30,7 @@
     "webpack-dev-server": "^4.15.1"
   },
   "devDependencies": {
+    "-": "^0.0.1",
     "@babel/core": "^7.23.6",
     "@babel/eslint-parser": "^7.23.3",
     "@babel/preset-env": "^7.23.6",
@@ -46,6 +47,7 @@
     "@storybook/test": "^8.6.12",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.5.1",
+    "@types/cypress": "^1.1.6",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.10.5",
     "@types/react": "^18.3.21",
