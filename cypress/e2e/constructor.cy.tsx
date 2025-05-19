@@ -3,56 +3,89 @@ import '../support/customCommands';
 
 describe('Интеграционные тесты для страницы конструктора бургера', () => {
   beforeEach(() => {
-    cy.intercept('GET', '/api/ingredients', { fixture: 'ingredients.json' }).as('getIngredients');
-    cy.intercept('POST', '**/orders', { fixture: 'order.json' }).as('createOrder');
-    cy.intercept('POST', '**/auth/login', { fixture: 'user.json' }).as('login');
-      // Отключаем native fetch
-    Cypress.on('window:before:load', (win) => {
-      delete (win as any).fetch
-    });
-
-    // Переход на страницу
-    cy.visit('http://localhost:4000');
-
-    // Ждём данные
-    cy.wait('@getIngredients');
+    cy.intercept('GET', '/api/ingredients', { fixture: 'ingredients.json' });
+    cy.intercept('POST', '/api/orders', { fixture: 'order.json' }).as(
+      'createOrder'
+    );
+    cy.intercept('GET', '/api/auth/user', { fixture: 'user.json' }).as(
+      'getUser'
+    );
+    cy.setCookie('accessToken', 'testAccessToken');
+    localStorage.setItem('refreshToken', 'testRefreshToken');
+    cy.visit(globalInfo.baseUrl);
   });
 
-  it('Добавление ингредиентов, авторизация и оформление заказа', () => {
-    // Находим ингредиенты по видимому тексту внутри карточек
-    cy.contains('Краторная булка N-200i').parents('[draggable]').click();
-    cy.get('.constructor-element__row').should('contain', 'Краторная булка N-200i');
+  afterEach(() => {
+    cy.clearLocalStorage();
+    cy.clearCookies();
+  });
 
-    cy.contains('Биокотлета из марсианской Магнолии').parents('[draggable]').click();
-    cy.get('.constructor-element__row').should('contain', 'Биокотлета из марсианской Магнолии');
+  it('Добавление ингредиентов в конструктор', () => {
+    // Добавление булки
+    cy.addingIngredient(
+      ingredients.bun.data,
+      ingredients.bun.constructor,
+      ingredients.bun.name
+    );
+    // Добавление начинки
+    cy.addingIngredient(
+      ingredients.main.data,
+      ingredients.main.constructor,
+      ingredients.main.name
+    );
+    // Добавление соуса
+    cy.addingIngredient(
+      ingredients.sauce.data,
+      ingredients.sauce.constructor,
+      ingredients.sauce.name
+    );
+  });
 
-    cy.contains('Соус Spicy-X').parents('[draggable]').click();
-    cy.get('.constructor-element__row').should('contain', 'Соус Spicy-X');
+  it('Работа модальных окон', () => {
+    // Проверка при клике на булку
+    cy.checkIngredientModal(
+      ingredients.bun.name,
+      modal.closeButtonData,
+      modal.overlayData
+    );
+    // Проверка при клике на начинку
+    cy.checkIngredientModal(
+      ingredients.main.name,
+      modal.closeButtonData,
+      modal.overlayData
+    );
+    // Проверка при клике на соус
+    cy.checkIngredientModal(
+      ingredients.sauce.name,
+      modal.closeButtonData,
+      modal.overlayData
+    );
+  });
 
-    // Переход к оформлению заказа
-    cy.get('button').contains('Оформить заказ').click();
-    cy.url().should('include', '/login');
+  it('Создание заказа', () => {
+    // Добавление ингредиентов
+    cy.addAllIngredientsToCart();
 
-    // Авторизация
-    cy.get('input[name="email"]').type('wawa@wa.ru');
-    cy.get('input[name="password"]').type('wawa123');
-    cy.get('button').contains('Войти').click();
+    // Оформление заказа
+    cy.get(globalInfo.createOrderBtnData).click();
+    cy.contains(globalInfo.orderNumber).should('exist');
 
-    cy.wait('@login');
-    cy.url().should('not.include', '/login');
+    // Закрытие модального окна
+    cy.get(modal.overlayData).click({ force: true });
+    cy.contains(globalInfo.orderNumber).should('not.exist');
 
-    // Повторно жмём "Оформить заказ"
-    cy.get('button').contains('Оформить заказ').click();
-    cy.wait('@createOrder');
-
-    // Проверка модалки
-    cy.get('[data-test-id="modal"]').should('exist').and('be.visible');
-    cy.get('[data-test-id="order-number"]').should('contain', '911');
-
-    cy.get('[data-test-id="modal-close"]').click();
-    cy.get('[data-test-id="modal"]').should('not.exist');
-
-    // Проверка, что всё очищено
-    cy.get('.constructor-element__row').should('not.exist');
+    // Проверка, что конструктор пуст
+    cy.get(ingredients.bun.constructor).should(
+      'not.contain',
+      ingredients.bun.name
+    );
+    cy.get(ingredients.main.constructor).should(
+      'not.contain',
+      ingredients.main.name
+    );
+    cy.get(ingredients.main.constructor).should(
+      'not.contain',
+      ingredients.sauce.name
+    );
   });
 });

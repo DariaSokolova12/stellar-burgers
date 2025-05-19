@@ -82,6 +82,7 @@
     "prettier-eslint": "^16.2.0",
     "prettier-eslint-cli": "^8.0.1",
     "react-test-renderer": "^18.2.0",
+    "start-server-and-test": "^2.0.12",
     "storybook": "^8.6.12",
     "storybook-addon-react-router-v6": "^0.3.6",
     "style-loader": "^3.3.3",
@@ -91,14 +92,15 @@
     "url-loader": "^4.1.1"
   },
   "scripts": {
-    "start": "webpack serve --mode=development",
+    "start": "webpack serve --mode=development --port 4000",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier ./src --write",
     "test": "jest",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cy:run": "start-server-and-test start http://localhost:4000 cypress:open"
   },
   "eslintConfig": {
     "extends": [

@@ -2,12 +2,12 @@
  * For a detailed explanation regarding each configuration property, visit:
  * https://jestjs.io/docs/configuration
  */
-  
+
 /** @type {import('jest').Config} */
 // import type { JestConfigWithTsJest } from 'jest';
 const config = {
-    preset: 'ts-jest',
-    testEnvironment: "jsdom",
+  preset: 'ts-jest',
+  testEnvironment: 'jsdom',
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -35,7 +35,7 @@ const config = {
   // ],
 
   // Indicates which provider should be used to instrument code for coverage
-  coverageProvider: "v8",
+  coverageProvider: 'v8',
 
   // A list of reporter names that Jest uses when writing coverage reports
   // coverageReporters: [
@@ -197,15 +197,15 @@ const config = {
   // Whether to use watchman for file crawling
   // watchman: true,
   transform: {
-          // '^.+\\.[tj]sx?$' для обработки файлов js/ts с помощью `ts-jest`
-          // '^.+\\.m?[tj]sx?$' для обработки файлов js/ts/mjs/mts с помощью `ts-jest`
-          '^.+\\.tsx?$': [
-            'ts-jest',
-            {
-              // настройки для ts-jest
-            },
-          ],
-        }
+    // '^.+\\.[tj]sx?$' для обработки файлов js/ts с помощью `ts-jest`
+    // '^.+\\.m?[tj]sx?$' для обработки файлов js/ts/mjs/mts с помощью `ts-jest`
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        // настройки для ts-jest
+      }
+    ]
+  }
 };
 
 module.exports = config;

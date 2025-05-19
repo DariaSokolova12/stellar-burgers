@@ -1,7 +1,7 @@
 import ingredientsSlice, {
   fetchIngredients,
   initialState
-} from './IngridientSlice';
+} from './IngredientsSlice';
 import { TIngredient } from '@utils-types';
 
 describe('ingredientsSlice reducer', () => {
