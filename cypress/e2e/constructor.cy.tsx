@@ -1,4 +1,5 @@
-import { ingredients, modal, globalInfo } from './support/selectors';
+import { ingredients, modal, globalInfo } from '../support/selectors';
+import '../support/customCommands';
 
 describe('Интеграционные тесты для страницы конструктора бургера', () => {
   beforeEach(() => {
@@ -11,7 +12,7 @@ describe('Интеграционные тесты для страницы кон
     );
     cy.setCookie('accessToken', 'testAccessToken');
     localStorage.setItem('refreshToken', 'testRefreshToken');
-    cy.visit(globalInfo.localUrl);
+    cy.visit(globalInfo.baseUrl);
   });
 
   afterEach(() => {
